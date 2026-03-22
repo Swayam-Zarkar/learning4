@@ -12,6 +12,9 @@ const [index, setindex] = useState(1);
     const response=await axios.get(`https://picsum.photos/v2/list?page=${index}&limit=10`);
     
     setUserData(response.data);
+    
+    
+   
   }
 
 useEffect(function(){
@@ -21,8 +24,11 @@ useEffect(function(){
 let printuserdata=<h3 className='text-gray-400 text-xs absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold'>loading..</h3>;
 if(UserData.length>1){
   printuserdata=UserData.map(function(elem,idx){
+    if(localStorage.getItem(`${elem.id}`)===null){
+      localStorage.setItem(`${elem.id}`,'false');
+    }
     return <div key={idx}>
-     <Card elem={elem}/>
+     <Card elem={elem} UserData={UserData} setUserData={setUserData}/>
     </div>
   })
 }
